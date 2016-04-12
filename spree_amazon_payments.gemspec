@@ -10,9 +10,9 @@
 # encoding: UTF-8
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_amazon_payments'
+  s.name        = 'solidus_amazon_payments'
   s.version     = '3.0.0'
-  s.summary     = 'Spree Amazon Payments'
+  s.summary     = 'Solidus Amazon Payments'
   s.description = ''
 
   s.required_ruby_version     = '>= 2.1.0'
