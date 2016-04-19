@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'solidus_core', '~> 1.2'
+  s.add_dependency 'solidus', '~> 1.2'
   s.add_dependency 'httparty'
 
   s.add_development_dependency 'capybara', '~> 2.4'
