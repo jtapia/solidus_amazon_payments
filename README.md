@@ -1,5 +1,6 @@
 solidus_amazon_payments
 ===================
+[![Circle CI](https://circleci.com/gh/boomerdigital/solidus_amazon_payments.svg?style=svg)](https://circleci.com/gh/boomerdigital/solidus_amazon_payments)
 
 Add Pay with Amazon to your Solidus-based Spree Commerce solution.
 
