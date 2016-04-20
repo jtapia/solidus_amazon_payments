@@ -1,0 +1,12 @@
+---
+machine:
+  ruby:
+    version: 2.3.0
+
+database:
+  override:
+    - mkdir -p config
+
+test:
+  pre:
+    - bundle exec rake test_app
