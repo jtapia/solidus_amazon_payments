@@ -51,12 +51,8 @@ module Spree
       false
     end
 
-    def can_close?(payment)
-      !payment.closed?
-    end
-
     def actions
-      %w{capture credit close}
+      %w{capture credit}
     end
 
   end
