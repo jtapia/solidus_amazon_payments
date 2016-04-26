@@ -10,7 +10,6 @@ Installation
 Add solidus_amazon_payments to your Gemfile:
 
 ```
-gem 'solidus_social'
 gem 'solidus_amazon_payments', github: 'boomerdigital/solidus_amazon_payments'
 ```
 
@@ -19,7 +18,6 @@ Bundle your dependencies and run the installation generator:
 ```
 bundle
 bundle exec rails g solidus_amazon_payments:install
-bundle exec rails g solidus_social:install
 ```
 
 Registration
