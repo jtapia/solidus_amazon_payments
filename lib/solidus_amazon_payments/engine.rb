@@ -9,7 +9,7 @@
 ##
 module SolidusAmazonPayments
   class Engine < Rails::Engine
-    #require 'spree/core'
+    require 'spree/core'
     isolate_namespace Spree
     engine_name 'solidus_amazon_payments'
 
