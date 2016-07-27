@@ -1,13 +1,17 @@
 class SpreeAmazon::Order
   class << self
-    def find(order_reference)
-      new(reference_id: order_reference).fetch
+    def find(order_reference, gateway:)
+      new(reference_id: order_reference, gateway: gateway).fetch
     end
   end
 
-  attr_accessor :state, :total, :email, :address, :reference_id, :currency
+  attr_accessor :state, :total, :email, :address, :reference_id, :currency,
+                :gateway
 
   def initialize(attributes)
+    if !attributes.key?(:gateway)
+      raise ArgumentError, "SpreeAmazon::Order requires a gateway parameter"
+    end
     self.attributes = attributes
   end
 
@@ -34,11 +38,7 @@ class SpreeAmazon::Order
   end
 
   def mws
-    @mws ||= AmazonMws.new(reference_id, in_test_mode?)
-  end
-
-  def in_test_mode?
-    Spree::Gateway::Amazon.first.preferred_test_mode
+    @mws ||= AmazonMws.new(reference_id, gateway: gateway)
   end
 
   def attributes_from_response(response)

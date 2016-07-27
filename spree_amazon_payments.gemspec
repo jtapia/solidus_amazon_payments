@@ -11,7 +11,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'solidus_amazon_payments'
-  s.version     = '3.0.0'
+  s.version     = '1.0.0'
   s.summary     = 'Solidus Amazon Payments'
   s.description = ''
 

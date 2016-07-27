@@ -82,6 +82,47 @@ describe Spree::Gateway::Amazon do
     end
   end
 
+  describe '.for_currency' do
+    context 'when the currency exists and is active' do
+      let!(:gbp_inactive_gateway) { create(:amazon_gateway, active: false, preferred_currency: 'GBP') }
+      let!(:gbp_active_gateway) { create(:amazon_gateway, preferred_currency: 'GBP') }
+
+      it 'finds the active gateway' do
+        expect(Spree::Gateway::Amazon.for_currency('GBP')).to eq(gbp_active_gateway)
+      end
+    end
+
+    context 'when the currency exists but is not active' do
+      let!(:gbp_inactive_gateway) { create(:amazon_gateway, active: false, preferred_currency: 'GBP') }
+
+      it 'returns nil' do
+        expect(Spree::Gateway::Amazon.for_currency('GBP')).to eq(nil)
+      end
+    end
+
+    context 'when the currency does not exist' do
+      it 'returns nil' do
+        expect(Spree::Gateway::Amazon.for_currency('ABC')).to eq(nil)
+      end
+    end
+  end
+
+  describe '#api_url' do
+    let(:gbp_gateway) { create(:amazon_gateway, preferred_region: 'uk') }
+    let(:usd_gateway) { create(:amazon_gateway, preferred_region: 'us') }
+    it 'generates the url based on the region' do
+      expect(gbp_gateway.api_url).not_to eq(usd_gateway.api_url)
+    end
+  end
+
+  describe '#widgets_url' do
+    let(:gbp_gateway) { create(:amazon_gateway, preferred_region: 'uk') }
+    let(:usd_gateway) { create(:amazon_gateway, preferred_region: 'us') }
+    it 'generates the url based on the region' do
+      expect(gbp_gateway.widgets_url).not_to eq(usd_gateway.widgets_url)
+    end
+  end
+
   def build_mws_auth_response(state:, total:)
     {
       "AuthorizeResponse" => {

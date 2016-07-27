@@ -15,6 +15,8 @@ class Spree::AmazonController < Spree::StoreController
   respond_to :json
 
   def address
+    @amazon_gateway = Spree::Gateway::Amazon.for_currency(current_order.currency)
+
     current_order.state = 'address'
     current_order.save!
   end
@@ -22,7 +24,7 @@ class Spree::AmazonController < Spree::StoreController
   def payment
     payment = current_order.payments.valid.amazon.first || current_order.payments.create
     payment.number = params[:order_reference]
-    payment.payment_method = Spree::Gateway::Amazon.first
+    payment.payment_method = Spree::Gateway::Amazon.for_currency(current_order.currency)
     payment.source ||= Spree::AmazonTransaction.create(
       order_reference: params[:order_reference],
       order_id: current_order.id
@@ -34,7 +36,11 @@ class Spree::AmazonController < Spree::StoreController
   end
 
   def delivery
-    address = SpreeAmazon::Address.find(current_order.amazon_order_reference_id)
+    address = SpreeAmazon::Address.find(
+      current_order.amazon_order_reference_id,
+      gateway: Spree::Gateway::Amazon.for_currency(current_order.currency),
+    )
+
     current_order.state = "address"
 
     if address
