@@ -23,7 +23,7 @@ describe Spree::Gateway::Amazon do
 
       gateway.credit(3000, nil, { originator: refund })
 
-      expect(mws).to have_received(:refund).with("CAPTURE_ID", payment.number, 30.0, "USD")
+      expect(mws).to have_received(:refund).with("CAPTURE_ID", /^#{payment.number}-\w+$/, 30.0, "USD")
     end
 
     let!(:refund) { create(:refund, payment: payment, amount: payment.amount) }
@@ -40,7 +40,11 @@ describe Spree::Gateway::Amazon do
   describe '#authorize' do
     it "succeeds" do
       response = build_mws_auth_response(state: 'Open', total: order.total)
-      expect(mws).to receive(:authorize).and_return(response)
+      expect(mws).to(
+        receive(:authorize).
+          with(/^#{payment.number}-\w+$/, order.total/100.0, "USD").
+          and_return(response)
+      )
 
       auth = payment_method.authorize(order.total, payment_source, {order_id: payment.send(:gateway_order_id)})
       expect(auth).to be_success
@@ -48,9 +52,14 @@ describe Spree::Gateway::Amazon do
   end
 
   describe '#capture' do
+    let(:payment_source) { Spree::AmazonTransaction.create!(order_id: order.id, order_reference: 'REFERENCE', authorization_id: 'AUTHORIZATION_ID') }
     it 'succeeds' do
       response = build_mws_capture_response(state: 'Completed', total: order.total)
-      expect(mws).to receive(:capture).and_return(response)
+      expect(mws).to(
+        receive(:capture).
+          with("AUTHORIZATION_ID", /^#{payment.number}-\w+$/, order.total/100.0, "USD").
+          and_return(response)
+      )
 
       auth = payment_method.capture(order.total, payment_source, {order_id: payment.send(:gateway_order_id)})
       expect(auth).to be_success
