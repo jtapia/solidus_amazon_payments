@@ -78,9 +78,8 @@ module Spree
 
       load_amazon_mws(order.amazon_order_reference_id)
 
-      response = nil
-      begin
-        response = @mws.authorize(
+      response = begin
+        @mws.authorize(
           authorization_reference_id,
           amount / 100.0,
           order.currency,
