@@ -7,6 +7,9 @@
 # @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
 #
 ##
+
+require 'pay_with_amazon'
+
 class AmazonMwsOrderResponse
   def initialize(response)
     @response = response.fetch("GetOrderReferenceDetailsResponse", {})
@@ -37,8 +40,8 @@ end
 class AmazonMws
   require 'httparty'
 
-  def initialize(number, gateway:)
-    @number = number
+  def initialize(amazon_order_reference_id, gateway:)
+    @amazon_order_reference_id = amazon_order_reference_id
     @gateway = gateway
   end
 
@@ -46,14 +49,14 @@ class AmazonMws
   def fetch_order_data
     AmazonMwsOrderResponse.new(process({
       "Action"=>"GetOrderReferenceDetails",
-      "AmazonOrderReferenceId" => @number
+      "AmazonOrderReferenceId" => @amazon_order_reference_id,
     }))
   end
 
   def set_order_data(total, currency)
     process({
       "Action"=>"SetOrderReferenceDetails",
-      "AmazonOrderReferenceId" => @number,
+      "AmazonOrderReferenceId" => @amazon_order_reference_id,
       "OrderReferenceAttributes.OrderTotal.Amount" => total,
       "OrderReferenceAttributes.OrderTotal.CurrencyCode" => currency
     })
@@ -62,19 +65,20 @@ class AmazonMws
   def confirm_order
     process({
       "Action"=>"ConfirmOrderReference",
-      "AmazonOrderReferenceId" => @number
+      "AmazonOrderReferenceId" => @amazon_order_reference_id,
     })
   end
 
-  def authorize(ref_number, total, currency)
-    process({
-      "Action"=>"Authorize",
-      "AmazonOrderReferenceId" => @number,
-      "AuthorizationReferenceId" => ref_number,
-      "AuthorizationAmount.Amount" => total,
-      "AuthorizationAmount.CurrencyCode" => currency,
-      "TransactionTimeout" => 0
-    })
+  def authorize(authorization_reference_id, total, currency, seller_authorization_note: nil)
+    client.authorize(
+      @amazon_order_reference_id,
+      authorization_reference_id,
+      total,
+      currency_code: currency,
+      transaction_timeout: 0, # 0 is synchronous mode
+      capture_now: false,
+      seller_authorization_note: seller_authorization_note,
+    )
   end
 
   def get_authorization_details(ref_number)
@@ -159,5 +163,16 @@ class AmazonMws
     val.to_s.gsub(/([^\w.~-]+)/) do
       "%" + $1.unpack("H2" * $1.bytesize).join("%").upcase
     end
+  end
+
+  def client
+    @client ||= PayWithAmazon::Client.new(
+      @gateway.preferred_merchant_id,
+      @gateway.preferred_aws_access_key_id,
+      @gateway.preferred_aws_secret_access_key,
+      region: @gateway.preferred_region.to_sym,
+      sandbox: @gateway.preferred_test_mode,
+      platform_id: nil, # TODO: Get a platform id for solidus_amazon_payments
+    )
   end
 end

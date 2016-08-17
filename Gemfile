@@ -15,6 +15,7 @@ end
 
 group :test do
   gem 'codeclimate-test-reporter', require: nil
+  gem 'webmock'
 end
 
 gemspec

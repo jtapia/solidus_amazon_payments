@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'solidus', '~> 1.2'
   s.add_dependency 'httparty'
+  s.add_dependency 'pay_with_amazon', '~> 1.1'
 
   s.add_development_dependency 'capybara', '~> 2.4'
   s.add_development_dependency 'coffee-rails'
