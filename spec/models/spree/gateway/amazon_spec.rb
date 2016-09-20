@@ -215,20 +215,6 @@ describe Spree::Gateway::Amazon do
       auth = payment_method.capture(order.total, payment_source, {order_id: payment.send(:gateway_order_id)})
       expect(auth).to be_success
     end
-
-    it 'sets response_code' do
-      binding.pry
-      response = build_mws_capture_response(state: 'Completed', total: order.total)
-      expect(mws).to(
-        receive(:capture).
-          with("AUTHORIZATION_ID", /^#{payment.number}-\w+$/, order.total/100.0, "USD").
-          and_return(response)
-      )
-
-      auth = payment_method.capture(order.total, payment_source, {order_id: payment.send(:gateway_order_id)})
-      binding.pry
-      expect(payment.response_code).to eq('AUTHORIZATION_ID')
-    end
   end
 
   describe '#purchase' do
