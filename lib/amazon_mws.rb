@@ -60,6 +60,17 @@ class AmazonMws
     )
   end
 
+  # @param total [String] The amount to set on the order
+  # @param amazon_options [Hash] These options are forwarded to the underlying
+  #   call to PayWithAmazon::Client#set_order_reference_details
+  def set_order_reference_details(total, amazon_options={})
+    client.set_order_reference_details(
+      @amazon_order_reference_id,
+      total,
+      amazon_options
+    )
+  end
+
   def set_order_data(total, currency)
     process({
       "Action"=>"SetOrderReferenceDetails",

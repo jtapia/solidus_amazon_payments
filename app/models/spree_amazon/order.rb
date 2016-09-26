@@ -38,8 +38,11 @@ class SpreeAmazon::Order
     end
   end
 
-  def save_total
-    mws.set_order_data(total, currency)
+  # @param total [String] The amount to set on the order
+  # @param amazon_options [Hash] These options are forwarded to the underlying
+  #   call to PayWithAmazon::Client#set_order_reference_details
+  def set_order_reference_details(total, amazon_options={})
+    mws.set_order_reference_details(total, amazon_options)
   end
 
   private
