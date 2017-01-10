@@ -20,6 +20,8 @@ bundle
 bundle exec rails g solidus_amazon_payments:install
 ```
 
+This gem is not compatible with v1.0 and v1.1
+
 Registration
 --------------
 [Register for your Amazon Payments account here](https://sellercentral.amazon.com/hz/me/sp/signup?solutionProviderOptions=lwa%3Bmws-acc%3B&marketplaceId=AGWSWK15IEJJ7&solutionProviderToken=AAAAAQAAAAEAAAAQw%2B2XzpFj2GWN0gTo0twkdAAAAHAcjkEL%2FdK5mKZbaJyrLpiWRmzHCLnC5eLDc8TlCy4aHUaagtgrQcxbsBRi5Y3xsRv1jXEP2QFuCAniHYcBxE%2FpbFnuBaEBPHBANejgd8xYL4fBX8Fz3I9%2Fl5bmIYBWyvSCEP8MPJQ6KKCNwPGcV%2FDN&solutionProviderId=A31NP5KFHXSFV1)
