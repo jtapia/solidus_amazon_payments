@@ -1,6 +1,6 @@
 solidus_amazon_payments
 ===================
-[![Circle CI](https://circleci.com/gh/boomerdigital/solidus_amazon_payments.svg?style=svg)](https://circleci.com/gh/boomerdigital/solidus_amazon_payments) [![Code Climate](https://codeclimate.com/github/boomerdigital/solidus_amazon_payments/badges/gpa.svg)](https://codeclimate.com/github/boomerdigital/solidus_amazon_payments) [![Test Coverage](https://codeclimate.com/github/boomerdigital/solidus_amazon_payments/badges/coverage.svg)](https://codeclimate.com/github/boomerdigital/solidus_amazon_payments/coverage)
+[![Build Status](https://api.travis-ci.org/boomerdigital/solidus_amazon_payments.svg?branch=master)](https://travis-ci.org/boomerdigital/solidus_amazon_payments)[![Circle CI](https://circleci.com/gh/boomerdigital/solidus_amazon_payments.svg?style=svg)](https://circleci.com/gh/boomerdigital/solidus_amazon_payments) [![Code Climate](https://codeclimate.com/github/boomerdigital/solidus_amazon_payments/badges/gpa.svg)](https://codeclimate.com/github/boomerdigital/solidus_amazon_payments) [![Test Coverage](https://codeclimate.com/github/boomerdigital/solidus_amazon_payments/badges/coverage.svg)](https://codeclimate.com/github/boomerdigital/solidus_amazon_payments/coverage)
 
 Add Pay with Amazon to your Solidus-based Spree Commerce solution.
 
