@@ -20,7 +20,7 @@ bundle
 bundle exec rails g solidus_amazon_payments:install
 ```
 
-This gem is not compatible with v1.0 and v1.1
+**This gem is not compatible with v1.0 and v1.1**
 
 Registration
 --------------
