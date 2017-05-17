@@ -11,7 +11,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'solidus_amazon_payments'
-  s.version     = '1.0.0'
+  s.version     = '2.0.0'
   s.summary     = 'Solidus Amazon Payments'
   s.description = ''
 
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'solidus', '~> 1.2'
+  s.add_dependency 'solidus', '~> 2.0'
   s.add_dependency 'pay_with_amazon', '~> 1.1'
 
   s.add_development_dependency 'capybara', '~> 2.4'
