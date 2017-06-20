@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   s.add_dependency 'solidus', ['>= 1.2.0', '< 3']
+  s.add_dependency 'solidus_support'
   s.add_dependency 'pay_with_amazon', '~> 1.1'
 
   s.add_development_dependency 'capybara', '~> 2.4'
