@@ -1,4 +1,4 @@
-class CopyAmazonCredentialsToGateway < ActiveRecord::Migration
+class CopyAmazonCredentialsToGateway < SolidusSupport::Migration[4.2]
   def change
     amazon_gateways = Spree::Gateway::Amazon.where(active: true).all
 
