@@ -50,8 +50,14 @@ module Spree
       true
     end
 
-    def method_type
-      "amazon"
+    if Spree.solidus_gem_version >= Gem::Version.new('2.3.x')
+      def partial_name
+        'amazon'
+      end
+    else
+      def method_type
+        'amazon'
+      end
     end
 
     def provider_class
