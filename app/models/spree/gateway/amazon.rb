@@ -18,8 +18,6 @@ module Spree
     preference :aws_secret_access_key, :string
     preference :region, :string, default: 'us'
 
-    has_one :provider
-
     validates :preferred_region, inclusion: { in: REGIONS }
 
     def self.for_currency(currency)
