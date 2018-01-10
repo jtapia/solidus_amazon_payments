@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Spree::AmazonController do
-  let!(:gateway) { create(:amazon_gateway) }
+  let!(:payment_method) { create(:amazon_gateway) }
 
   describe "GET #address" do
     it "sets the order to the address state" do
@@ -142,6 +142,9 @@ describe Spree::AmazonController do
       }
       allow_any_instance_of(SpreeAmazon::Order).to receive(:confirm).and_return(nil)
       allow_any_instance_of(SpreeAmazon::Order).to receive(:set_order_reference_details).and_return(nil)
+      allow_any_instance_of(Spree::Gateway::Amazon).to receive(:authorize).and_return(
+        ActiveMerchant::Billing::Response.new(true, 'success')
+      )
     end
 
     it "completes the spree order" do
@@ -259,7 +262,7 @@ describe Spree::AmazonController do
     transaction = Spree::AmazonTransaction.create!(
       order_id: order.id, order_reference: 'REFERENCE'
     )
-    order.payments.create!(source: transaction, amount: amount || order.total)
+    create(:payment, order: order, payment_method: payment_method, source: transaction, amount: amount || order.total)
   end
 
   def build_amazon_address(attributes = {})
